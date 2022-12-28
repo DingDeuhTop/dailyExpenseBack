@@ -12,7 +12,9 @@ class BuyController extends Controller
     public function index()
     {
         $total = DB::table('buys')->sum('price');
-        $buy = Buy::query()->orderBy('id', 'ASC')->paginate(8);
+        $buy = Buy::query()->orderBy('id', 'ASC')->paginate(Request()->rowsPerPage);
+        // logger($buy);
+        // return $buy;
         return  compact('buy', 'total');
     }
 

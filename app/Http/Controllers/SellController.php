@@ -14,7 +14,7 @@ class SellController extends Controller
     public function index()
     {
         $total = DB::table('sells')->sum('price');
-        $sell = Sell::query()->paginate();
+        $sell = Sell::query()->paginate(Request()->rowsPerPage);
         return compact('total', 'sell');
     }
 
