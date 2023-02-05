@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class StoreBaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,14 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'required',
-            'store_name' => 'required',
-            'address' => 'required'
+            'customer_id' => 'required',
+            'sell_id' => 'required|unique:bas,sell_id',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'sell_id.unique' => 'Ba for Sell Item has already added.'
         ];
     }
 }

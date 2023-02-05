@@ -5,22 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sell extends Model
+class Customer extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
-    public function buy()
-    {
-        return $this->belongsTo(Buy::class);
-    }
 
     public function ba()
     {
         return $this->hasMany(Ba::class);
     }
-    public function customer()
+    public function sell()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Sell::class);
     }
 }

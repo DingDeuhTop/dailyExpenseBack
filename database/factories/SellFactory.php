@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,14 @@ class SellFactory extends Factory
      */
     public function definition()
     {
+        $customers_id = Customer::all('id');
         return [
+            'customer_id' => $customers_id->random(1)->first()->id,
             'item' => fake()->word(),
             'price' => fake()->randomFloat(),
+            'date' => fake()->date(),
+            'amount_pay' => fake()->randomFloat(),
+            'date_of_paid' => fake()->date(),
         ];
     }
 }

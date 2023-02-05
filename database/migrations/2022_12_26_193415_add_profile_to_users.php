@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('asdfs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('store_name');
+            $table->string('address');
+            $table->string('phone_number', 15)->nullable();
+            $table->string('establish')->nullable();
         });
     }
 
@@ -26,6 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asdfs');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

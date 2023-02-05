@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Ba;
 use App\Models\Customer;
 use App\Models\Sell;
 use Illuminate\Database\Migrations\Migration;
@@ -15,14 +16,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sells', function (Blueprint $table) {
+        Schema::create('bas', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class);
-            $table->string('item');
-            $table->string('price');
-            $table->date('date')->nullable();
-            $table->string('amount_pay')->nullable();
-            $table->date('date_of_paid')->nullable();
+            $table->foreignIdFor(Sell::class);
+            // $table->string('item');
+            // $table->string('price');
+            // $table->string('date');
+            // $table->string('paid');
+            // $table->string('paid_date');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sells');
+        Schema::dropIfExists('bas');
     }
 };
