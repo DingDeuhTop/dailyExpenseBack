@@ -11,6 +11,17 @@ class Customer extends Model
 
     protected $guarded = ['id'];
 
+    public function scopeFilter($query, string $filter = null)
+    {
+        return $query->when(
+            $filter,
+            fn ($q) => $q->where(
+                'name',
+                $filter
+            )
+        );
+    }
+
     public function ba()
     {
         return $this->hasMany(Ba::class);

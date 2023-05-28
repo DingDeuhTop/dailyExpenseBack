@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Http\Resources\CustomerResource;
+use App\Models\Ba;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,11 @@ class CustomerController extends Controller
     public function index()
     {
         // $customer = Customer::paginate(Request()->rowsPerPage);
-        $customers = CustomerResource::collection(Customer::with('sell')
-            ->paginate(Request()->rowsPerPage));
+        $search_filter = Customer::query()
+            ->with('sell:id')->paginate(Request()->rowsPerPage);
+        $customers = CustomerResource::collection(
+            $search_filter
+        );
         return $customers;
         // return CustomerResource::paginate(Request()->rowsPerPage);
     }
@@ -53,9 +57,11 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        $CustomerBa = $customer->with('ba')
-            ->where('id', $customer->id)
-            ->get();
+        // $CustomerBa = $customer->with('ba')
+        //     ->where('id', $customer->id)
+        //     ->get();
+        return $customer->load('ba', 'ba.sell');
+        // Ba::query()->where('customer_id', $customer->id)->with('customer', 'sell')->get();
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBaRequest;
 use App\Http\Resources\BaResource;
 use App\Models\Ba;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
 
 class BaController extends Controller
 {
@@ -19,14 +20,15 @@ class BaController extends Controller
     {
         // $bas = Ba::paginate(Request()->rowPerPage);
         // $bas = BaResource::collection(Ba::paginate(Request()->rowsPerPage));
+        $totalBa = DB::table('sells')->sum('price');
         $bas = BaResource::collection(Ba::with('customer', 'sell')
             ->when(
                 request()->id,
                 fn ($q) => $q->where('customer_id', '=', request()->id)
             )
             ->paginate(Request()->rowsPerPage));
-        // logger($bas);
-        return $bas;
+        // logger($totalBa);
+        return compact('bas', 'totalBa');
     }
 
     /**
@@ -56,6 +58,7 @@ class BaController extends Controller
     public function store(StoreBaRequest $request)
     {
         $ba = Ba::create($request->validated());
+        return $this->index();
         // logger($ba);
     }
 
